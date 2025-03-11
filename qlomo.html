@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú de Q' Lomo</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background-color: #000; color: #fff; margin: 0; padding: 0; }
+        .card {
+            background-color: #1c1c1c;
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        h1, h2, h3 { color: #7ED957; }
+        .menu-item {
+            background-color: #333;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+        .menu-item h4 { margin: 0; color: #7ED957; }
+        .menu-item p { margin: 5px 0; color: #ccc; }
+        .menu-item .price { font-size: 18px; font-weight: bold; color: #7ED957; }
+        .menu-item button {
+            background-color: #7ED957;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .menu-item button:hover { background-color: #5CAF47; }
+        .hidden { display: none; }
+        .personalizacion { margin-top: 10px; }
+        .personalizacion label { display: block; margin: 5px 0; color: #ccc; }
+        .carrito {
+            background-color: #333;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+        .carrito h3 { color: #7ED957; }
+        .carrito ul { list-style-type: none; padding: 0; }
+        .carrito li { margin: 10px 0; padding: 10px; background-color: #444; border-radius: 5px; color: #ccc; }
+        .carrito button { background-color: #7ED957; color: #000; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
+        .carrito button:hover { background-color: #5CAF47; }
+        .total { font-size: 18px; font-weight: bold; color: #7ED957; }
+        .gps {
+            background-color: #333;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+        .gps h3 { color: #7ED957; }
+        .gps label { display: block; margin: 5px 0; color: #ccc; }
+        .gps input { width: 100%; padding: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #7ED957; background-color: #444; color: #fff; }
+        .gps button { background-color: #7ED957; color: #000; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+        .gps button:hover { background-color: #5CAF47; }
+        .entrega-programada {
+            background-color: #333;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+        .entrega-programada h3 { color: #7ED957; }
+        .entrega-programada label { display: block; margin: 5px 0; color: #ccc; }
+        .entrega-programada input { width: 100%; padding: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #7ED957; background-color: #444; color: #fff; }
+        .ir-carrito {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #7ED957;
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            font-weight: bold;
+        }
+        .ir-carrito:hover { background-color: #5CAF47; }
+    </style>
+</head>
+<body>
+    <!-- Botón flotante "Ir al carrito" -->
+    <button class="ir-carrito" onclick="irAlCarrito()">🛒 Ver Carrito</button>
+
+    <div class="card">
+        <h1>Menú de Q' Lomo</h1>
+
+        <!-- GPS básico -->
+        <div class="gps">
+            <h3>Ubicación</h3>
+            <p>📍 Dirección del comercio: Av. Siempre Viva 123, Buenos Aires</p>
+            <label for="direccion-cliente">Ingresa tu dirección:</label>
+            <input type="text" id="direccion-cliente" placeholder="Ej: Av. Corrientes 456">
+            <button onclick="confirmarDireccion()">Confirmar Dirección</button>
+        </div>
+
+        <!-- Entregas programadas -->
+        <div class="entrega-programada">
+            <h3>Entregas Programadas</h3>
+            <label for="fecha-entrega">Fecha y hora de entrega:</label>
+            <input type="datetime-local" id="fecha-entrega">
+        </div>
+
+        <!-- Categoría de Hamburguesas -->
+        <div class="category">
+            <h2>Hamburguesas</h2>
+            <div class="menu-item">
+                <h4>Hamburguesa Clásica</h4>
+                <p>Carne, queso, lechuga, tomate y mayonesa.</p>
+                <p class="price">$1.200</p>
+                <button onclick="agregarAlCarrito('clasica', 1200, ['Queso', 'Lechuga', 'Tomate', 'Mayonesa'], 1)">Pedido rápido</button>
+                <button onclick="mostrarPersonalizacion('clasica')">Personalizar</button>
+            </div>
+            <div class="menu-item">
+                <h4>Hamburguesa con Bacon</h4>
+                <p>Carne, queso, bacon, cebolla caramelizada y salsa BBQ.</p>
+                <p class="price">$1.500</p>
+                <button onclick="agregarAlCarrito('bacon', 1500, ['Queso', 'Bacon', 'Cebolla caramelizada', 'Salsa BBQ'], 1)">Pedido rápido</button>
+                <button onclick="mostrarPersonalizacion('bacon')">Personalizar</button>
+            </div>
+        </div>
+
+        <!-- Categoría de Lomos -->
+        <div class="category">
+            <h2>Lomos</h2>
+            <div class="menu-item">
+                <h4>Lomo Completo</h4>
+                <p>Lomo, jamón, queso, huevo, lechuga y tomate.</p>
+                <p class="price">$1.800</p>
+                <button onclick="agregarAlCarrito('lomo', 1800, ['Jamón', 'Queso', 'Huevo', 'Lechuga', 'Tomate'], 1)">Pedido rápido</button>
+                <button onclick="mostrarPersonalizacion('lomo')">Personalizar</button>
+            </div>
+        </div>
+
+        <!-- Personalización de hamburguesas -->
+        <div id="personalizacion-clasica" class="personalizacion hidden">
+            <h4>Personalizar Hamburguesa Clásica</h4>
+            <label>
+                <input type="checkbox" id="queso-extra-clasica"> Queso extra (+$100)
+            </label>
+            <label>
+                <input type="checkbox" id="bacon-clasica"> Bacon (+$150)
+            </label>
+            <label>
+                Cantidad de medallones:
+                <input type="number" id="medallones-clasica" min="1" max="5" value="1">
+            </label>
+            <button onclick="agregarAlCarritoPersonalizado('clasica')">Agregar al carrito</button>
+        </div>
+
+        <div id="personalizacion-bacon" class="personalizacion hidden">
+            <h4>Personalizar Hamburguesa con Bacon</h4>
+            <label>
+                <input type="checkbox" id="queso-extra-bacon"> Queso extra (+$100)
+            </label>
+            <label>
+                <input type="checkbox" id="salsa-bbq-bacon"> Salsa BBQ extra (+$50)
+            </label>
+            <label>
+                Cantidad de medallones:
+                <input type="number" id="medallones-bacon" min="1" max="5" value="1">
+            </label>
+            <button onclick="agregarAlCarritoPersonalizado('bacon')">Agregar al carrito</button>
+        </div>
+
+        <!-- Carrito de compras -->
+        <div id="carrito-section" class="carrito">
+            <h3>Carrito de Compras</h3>
+            <ul id="lista-carrito"></ul>
+            <p class="total">Total: $<span id="total-carrito">0</span></p>
+            <button onclick="vaciarCarrito()">Vaciar Carrito</button>
+            <button onclick="confirmarPedido()">Confirmar Pedido</button>
+        </div>
+    </div>
+
+    <script>
+        let carrito = [];
+        let direccionCliente = "";
+        let fechaEntrega = "";
+
+        // Función para confirmar la dirección del cliente
+        function confirmarDireccion() {
+            direccionCliente = document.getElementById('direccion-cliente').value;
+            if (direccionCliente) {
+                alert(`Dirección confirmada: ${direccionCliente}`);
+            } else {
+                alert("Por favor, ingresa tu dirección.");
+            }
+        }
+
+        // Función para mostrar la personalización de la hamburguesa
+        function mostrarPersonalizacion(tipo) {
+            document.querySelectorAll('.personalizacion').forEach(function (section) {
+                section.classList.add('hidden');
+            });
+            document.getElementById('personalizacion-' + tipo).classList.remove('hidden');
+        }
+
+        // Función para agregar la hamburguesa al carrito (sin personalización)
+        function agregarAlCarrito(tipo, precioBase, ingredientes, medallones) {
+            const hamburguesa = {
+                tipo: tipo,
+                ingredientes: ingredientes,
+                medallones: medallones,
+                precio: precioBase
+            };
+            carrito.push(hamburguesa);
+            actualizarCarrito();
+        }
+
+        // Función para agregar la hamburguesa personalizada al carrito
+        function agregarAlCarritoPersonalizado(tipo) {
+            let precioBase = 0;
+            let ingredientes = [];
+            let medallones = 1;
+
+            if (tipo === 'clasica') {
+                precioBase = 1200;
+                if (document.getElementById('queso-extra-clasica').checked) {
+                    ingredientes.push('Queso extra');
+                    precioBase += 100;
+                }
+                if (document.getElementById('bacon-clasica').checked) {
+                    ingredientes.push('Bacon');
+                    precioBase += 150;
+                }
+                medallones = parseInt(document.getElementById('medallones-clasica').value);
+            } else if (tipo === 'bacon') {
+                precioBase = 1500;
+                if (document.getElementById('queso-extra-bacon').checked) {
+                    ingredientes.push('Queso extra');
+                    precioBase += 100;
+                }
+                if (document.getElementById('salsa-bbq-bacon').checked) {
+                    ingredientes.push('Salsa BBQ extra');
+                    precioBase += 50;
+                }
+                medallones = parseInt(document.getElementById('medallones-bacon').value);
+            }
+
+            precioBase *= medallones;
+
+            const hamburguesa = {
+                tipo: tipo,
+                ingredientes: ingredientes,
+                medallones: medallones,
+                precio: precioBase
+            };
+            carrito.push(hamburguesa);
+            actualizarCarrito();
+        }
+
+        // Función para actualizar el carrito
+        function actualizarCarrito() {
+            const listaCarrito = document.getElementById('lista-carrito');
+            const totalCarrito = document.getElementById('total-carrito');
+
+            listaCarrito.innerHTML = '';
+            let total = 0;
+
+            carrito.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.textContent = `${item.tipo} (${item.ingredientes.join(', ')}) - ${item.medallones} medallón(es) - $${item.precio}`;
+                
+                const botonEliminar = document.createElement('button');
+                botonEliminar.textContent = 'Eliminar';
+                botonEliminar.onclick = () => eliminarDelCarrito(index);
+                li.appendChild(botonEliminar);
+
+                listaCarrito.appendChild(li);
+                total += item.precio;
+            });
+
+            totalCarrito.textContent = total;
+        }
+
+        // Función para eliminar un ítem del carrito
+        function eliminarDelCarrito(index) {
+            carrito.splice(index, 1);
+            actualizarCarrito();
+        }
+
+        // Función para vaciar el carrito
+        function vaciarCarrito() {
+            carrito = [];
+            actualizarCarrito();
+        }
+
+        // Función para confirmar el pedido
+        function confirmarPedido() {
+            if (carrito.length === 0) {
+                alert("El carrito está vacío. Agrega productos antes de confirmar.");
+                return;
+            }
+            if (!direccionCliente) {
+                alert("Por favor, ingresa tu dirección antes de confirmar el pedido.");
+                return;
+            }
+
+            fechaEntrega = document.getElementById('fecha-entrega').value;
+            if (!fechaEntrega) {
+                alert("Por favor, selecciona una fecha y hora de entrega.");
+                return;
+            }
+
+            const total = document.getElementById('total-carrito').textContent;
+            alert(`Pedido confirmado!\nDirección: ${direccionCliente}\nFecha de entrega: ${fechaEntrega}\nTotal: $${total}`);
+        }
+
+        // Función para ir al carrito
+        function irAlCarrito() {
+            document.getElementById('carrito-section').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

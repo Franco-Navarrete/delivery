@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedido de Comida</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background-color: #000; color: #fff; }
+        .card {
+            background-color: #1c1c1c;
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        h1, h2, h3 { color: #7ED957; }
+        .restaurant-card {
+            display: inline-block;
+            width: 30%;
+            margin: 15px;
+            padding: 15px;
+            background-color: #333;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+        }
+        .restaurant-card:hover { background-color: #7ED957; color: #000; }
+        button { padding: 10px; margin: 10px; cursor: pointer; background-color: #7ED957; border: none; color: #000; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Elige tu Restaurante 🍽️</h1>
+        <!-- Tarjetas de Restaurante -->
+        <div id="restaurantes">
+            <div class="restaurant-card" onclick="window.location.href='qlomo.html'">
+                <h2>Q' Lomo</h2>
+                <p>Deliciosos lomos y hamburguesas</p>
+            </div>
+            <div class="restaurant-card" onclick="mostrarMenu('puchu')">
+                <h2>Lo de Puchu</h2>
+                <p>Comida tradicional argentina</p>
+            </div>
+            <div class="restaurant-card" onclick="mostrarMenu('gringo')">
+                <h2>El Gringo</h2>
+                <p>Comida americana</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function mostrarMenu(restaurante) {
+            alert("Has seleccionado: " + restaurante);
+        }
+    </script>
+</body>
+</html>
